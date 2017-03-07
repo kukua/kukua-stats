@@ -23,7 +23,7 @@ const measurementsClient = mysql.createConnection({
 	host: process.env.MYSQL_HOST,
 	user: process.env.MYSQL_USER,
 	password: process.env.MYSQL_PASSWORD,
-	database: process.env.MYSQL_CONCAVA_DATABASE,
+	database: process.env.MYSQL_MEASUREMENTS_DATABASE,
 })
 measurementsClient.connect()
 
@@ -64,14 +64,32 @@ concavaClient.query(`
 
 	var rows = []
 
-	results.forEach((result) => {
-		rows.push({
-			'Device name': result.deviceName,
-			'UDID': result.udid,
-			'Template': result.templateName,
-		})
-	})
+	measurementsClient.query(
+		'SELECT ' + results.map((result) => `
+			(SELECT UNIX_TIMESTAMP(timestamp) FROM \`${result.udid}\` ORDER BY timestamp DESC LIMIT 1) AS \`${result.udid}\`
+		`).join(','),
+		(err, results2) => {
+			if (err) return done(err)
 
-	fs.writeFileSync(outputFile, createSpreadsheet(rows), { encoding: 'UTF-8' })
-	done()
+			var lastTimestamps = results2[0]
+
+			results.forEach((result) => {
+				var lastTimestamp = lastTimestamps[result.udid] * 1000
+
+				rows.push({
+					'Device name': result.deviceName,
+					'UDID': result.udid,
+					'ConCaVa template': result.templateName,
+					'Last timestamp': (
+						lastTimestamp > 0
+						? moment.utc(lastTimestamp).format('YYYY-MM-DD HH:mm:ss')
+						: ''
+					),
+				})
+			})
+
+			fs.writeFileSync(outputFile, createSpreadsheet(rows), { encoding: 'UTF-8' })
+			done()
+		}
+	)
 })
