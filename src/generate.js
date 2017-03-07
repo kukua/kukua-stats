@@ -184,7 +184,7 @@ concavaClient.query(`
 	SELECT d.name AS deviceName, d.udid, t.name AS templateName
 	FROM devices d
 	INNER JOIN templates t ON t.id = d.template_id
-	WHERE d.name LIKE 'KUKUA_%'
+	WHERE d.name LIKE 'KUKUA_%' OR d.name LIKE 'IITA_%'
 	ORDER BY d.name ASC
 `, (err, results) => {
 	if (err) return done(err)
