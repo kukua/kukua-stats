@@ -7,7 +7,7 @@ const moment = require('moment-timezone')
 const mysql = require('mysql')
 
 const basePath = path.resolve(__dirname, '..')
-const outputFile = path.resolve(basePath, 'data', moment().utc().toISOString() + '.tsv')
+const outputFile = path.resolve(basePath, 'data', 'kukua.stats.' + moment().utc().toISOString() + '.tsv')
 
 console.log('Output file:', path.relative(basePath, outputFile))
 
