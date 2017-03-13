@@ -10,6 +10,7 @@ cd kukua-stats/
 cp .env.example .env
 chmod 600 .env
 # > Edit .env
+docker-compose run --rm generate npm install
 
 # Manually
 docker-compose up generate
