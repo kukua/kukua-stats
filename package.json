@@ -17,6 +17,7 @@
   "homepage": "https://github.com/kukua/kukua-stats#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
+    "mailgun-js": "^0.8.2",
     "moment-timezone": "^0.5.11",
     "mysql": "^2.13.0",
     "node-parallel": "^0.1.6",

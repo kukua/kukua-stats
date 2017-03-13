@@ -6,6 +6,10 @@ const _ = require('underscore')
 const moment = require('moment-timezone')
 const mysql = require('mysql')
 const parallel = require('node-parallel')
+const mailgun = require('mailgun-js')({
+	apiKey: process.env.MAILGUN_API_KEY,
+	domain: process.env.MAILGUN_DOMAIN,
+})
 
 const basePath = path.resolve(__dirname, '..')
 const outputFile = path.resolve(basePath, 'reports', 'kukua.stats.' + moment().utc().toISOString() + '.tsv')
@@ -249,7 +253,16 @@ concavaClient.query(`
 	p.done((err) => {
 		if (err) return done(err)
 
+		// Write report to file
 		fs.writeFileSync(outputFile, createSpreadsheet(rows), { encoding: 'UTF-8' })
-		done()
+
+		// Send emails
+		mailgun.messages().send({
+			from: process.env.MAIL_FROM,
+			to: process.env.MAIL_TO,
+			subject: process.env.MAIL_SUBJECT,
+			text: process.env.MAIL_TEXT,
+			attachment: outputFile,
+		}, (err, body) => done(err))
 	})
 })
