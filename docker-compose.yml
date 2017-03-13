@@ -1,0 +1,6 @@
+generate:
+    image: node:7.4
+    working_dir: /data
+    volumes:
+        - .:/data
+    command: npm start

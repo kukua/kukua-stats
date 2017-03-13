@@ -1,0 +1,1 @@
+0 23 * * 0 ubuntu cd /path/to/kukua-stats/ && /usr/local/bin/docker-compose up generate

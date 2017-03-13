@@ -8,7 +8,7 @@ const mysql = require('mysql')
 const parallel = require('node-parallel')
 
 const basePath = path.resolve(__dirname, '..')
-const outputFile = path.resolve(basePath, 'data', 'kukua.stats.' + moment().utc().toISOString() + '.tsv')
+const outputFile = path.resolve(basePath, 'reports', 'kukua.stats.' + moment().utc().toISOString() + '.tsv')
 
 console.log('Output file:', path.relative(basePath, outputFile))
 

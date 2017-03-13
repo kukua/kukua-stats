@@ -1,9 +1,20 @@
 {
   "name": "kukua-stats",
+  "description": "Kukua statistics.",
   "private": true,
   "scripts": {
     "start": "node src/generate.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kukua/kukua-stats.git"
+  },
+  "author": "Kukua Team <dev@kukua.cc>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kukua/kukua-stats/issues"
+  },
+  "homepage": "https://github.com/kukua/kukua-stats#readme",
   "dependencies": {
     "dotenv": "^4.0.0",
     "moment-timezone": "^0.5.11",
