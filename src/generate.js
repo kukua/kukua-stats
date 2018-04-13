@@ -193,7 +193,7 @@ concavaClient.query(`
 `, (err, results) => {
 	if (err) return done(err)
 
-	var p = parallel().timeout(60 * 1000)
+	var p = parallel().timeout(60 * 60 * 1000)
 	var rows = []
 
 	results.forEach((result) => {
